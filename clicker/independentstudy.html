@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <link rel="stylesheet" type="text/css" href="independentstudy.css"></link>
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"></link>
+  <title>Clicker</title>
+  <link rel="shortcut icon" href="clickericon.png" />
+
+</head>
+<body>
+
+  <h1>clicker</h1>
+  <p class="dez">The game where you click.</p>
+  <p class="dez2">(don't you have better things to do?)</p>
+  <br />
+  <br />
+  <div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'play')">play</button>
+    <button class="tablinks" onclick="openTab(event, 'instruction')">instruction</button>
+    <button class="tablinks" onclick="openTab(event, 'about')">about</button>
+  </div>
+
+  <div id="play" class="tabcontent">
+    <h2>Play</h2>
+    <button onclick="save()">Save</button>
+    <button onclick="load()">Load</button>
+    <br />
+    <br />
+    <br />
+    <h2>Clicks: <span id="clicks">0</span></h2>
+    <h3>Clicks Per Second: <span id="clicksPS">0</span></h3>
+    <br />
+    <button onclick="gainClick()">Click</button>
+    <button onclick="getMultiplier()">x2 Multiplier</button>
+    <br />
+    <br />
+    <p class="indentme"><span id="costMultiplier">200</span> Clicks</p>
+    <br />
+    <br />
+    <br />
+    <div class="shop">
+      <button class="shoplinks" onclick="openShop(event, 'clickerTab')">Clicker</button>
+      <button class="shoplinks" onclick="openShop(event, 'superClickerTab')">Super Clicker</button>
+      <button class="shoplinks" onclick="openShop(event, 'superDuperClickerTab')">Super Duper Clicker</button>
+    </div>
+
+    <div id="clickerTab" class="shopcontent">
+      <p>Buy Clicker (+1 clicks per second)</p>
+      <img src="clicker.png" />
+      <br />
+      <p><span id="costClickers">16</span> Clicks</p>
+      <br />
+      <button onclick="getClicker()">Get 1</button>
+      <button onclick="get10Clicker()">Get 10</button>
+      <button onclick="get100Clicker()">Get 100</button>
+      <br />
+      <br />
+      <p>You Own: <span id="amountClickers">0</span></p>
+      <br />
+    </div>
+
+    <div id="superClickerTab" class="shopcontent">
+      <p>Buy Super Clicker (+5 clicks per second)</p>
+      <img src="superclicker.png" />
+      <br />
+      <p><span id="costSuperClickers">100</span> Clicks</p>
+      <br />
+      <button onclick="getSuperClicker()">Get 1</button>
+      <button onclick="get10SuperClicker()">Get 10</button>
+      <button onclick="get100SuperClicker()">Get 100</button>
+      <br />
+      <br />
+      <p>You Own: <span id="amountSuperClickers">0</span></p>
+      <br />
+    </div>
+
+    <div id="superDuperClickerTab" class="shopcontent">
+      <p>Buy Super Duper Clicker (+100 clicks per second)</p>
+      <img src="superduperclicker.png" />
+      <br />
+      <p><span id="costSuperDuperClickers">2000</span> Clicks</p>
+      <br />
+      <button onclick="getSuperDuperClicker()">Get 1</button>
+      <button onclick="get10SuperDuperClicker()">Get 10</button>
+      <button onclick="get100SuperDuperClicker()">Get 100</button>
+      <br />
+      <br />
+      <p>You Own: <span id="amountSuperDuperClickers">0</span></p>
+      <br />
+    </div>
+  </div>
+
+  <div id="instruction" class="tabcontent">
+    <h2>Instruction</h2>
+    <p>Click the button to generate clicks. Use the clicks to purchase clickers that will generate clicks for you without you having to do anything.</p>
+  </div>
+
+  <div id="about" class="tabcontent">
+    <h2>About</h2>
+    <p>"Clicker" is a simple idle clicker game that runs on HTML, CSS, and JavaScript. Someone created this game in 2017 as a demonstration of the capabilities of the programming languages.</p>
+    <br />
+    <p>Version History</p>
+    <p>Version 1.0 - Release</p>
+  </div>
+<script>
+  function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName('tabcontent');
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = 'none';
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  function openShop(evt, shopName) {
+    var i, shopcontent, shoplinks;
+
+    shopcontent = document.getElementsByClassName("shopcontent");
+    for (i = 0; i < shopcontent.length; i++) {
+        shopcontent[i].style.display = "none";
+    }
+
+    shoplinks = document.getElementsByClassName("shoplinks");
+    for (i = 0; i < shoplinks.length; i++) {
+        shoplinks[i].className = shoplinks[i].className.replace(" active", "");
+    }
+
+    document.getElementById(shopName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  function save() {
+    localStorage.setItem("clicks", clicks);
+    localStorage.setItem("clicksPS", clicksPS);
+    localStorage.setItem("clicksPC", clicksPC);
+    localStorage.setItem("clickers", clickers);
+    localStorage.setItem("superClickers", superClickers);
+    localStorage.setItem("superDuperClickers", superDuperClickers)
+  }
+
+  function load() {
+    clicks = localStorage.getItem("clicks");
+    clicks = parseInt(clicks);
+    clicksPS = localStorage.getItem("clicksPS");
+    clicksPS = parseInt(clicksPS);
+    clicksPC = localStorage.getItem("clicksPC");
+    clicksPC = parseInt(clicksPC);
+    clickers = localStorage.getItem("clickers");
+    clickers = parseInt(clickers);
+    superClickers = localStorage.getItem("superClickers");
+    superClickers = parseInt(superClickers);
+    superDuperClickers = localStorage.getItem("superDuperClickers");
+    superDuperClickers = parseInt(superDuperClickers);
+  }
+
+var clicks = 0;
+var clicksPC = 1;
+var clicksPS = 0;
+var clickers = 0;
+var superClickers = 0;
+var superDuperClickers = 0;
+
+function update() {
+  document.getElementById("clicks").innerHTML = clicks;
+  document.getElementById("clicksPS").innerHTML = clicksPS;
+  document.getElementById("amountClickers").innerHTML = clickers;
+  document.getElementById("costClickers").innerHTML = ((clickers + 1) * 16);
+  document.getElementById("amountSuperClickers").innerHTML = superClickers;
+  document.getElementById("costSuperClickers").innerHTML = ((superClickers + 1) * 100);
+  document.getElementById("amountSuperDuperClickers").innerHTML = superDuperClickers;
+  document.getElementById("costSuperDuperClickers").innerHTML = ((superDuperClickers + 1) * 2000);
+  document.getElementById("costMultiplier").innerHTML = ((clicksPC) * 100);
+}
+
+function timer() {
+  clicks = clicks + clicksPS
+}
+
+function gainClick() {
+  clicks = clicks + clicksPC;
+}
+
+function getClicker() {
+  if (clicks >= ((clickers + 1) * 16)) {
+    clicks = clicks - ((clickers + 1) * 16)
+    clickers = clickers + 1
+    clicksPS = clicksPS + 1
+    costClickers = ((clickers + 1) * 16)
+  }
+}
+
+function get10Clicker() {
+  if (clicks >= ((clickers + 10) * 16)) {
+    clicks = clicks - ((clickers + 10) * 16)
+    clickers = clickers + 10
+    clicksPS = clicksPS + 10
+    costClickers = ((clickers + 10) * 16)
+  }
+}
+
+function get100Clicker() {
+  if (clicks >= ((clickers + 100) * 16)) {
+    clicks = clicks - ((clickers + 100) * 16)
+    clickers = clickers + 100
+    clicksPS = clicksPS + 100
+    costClickers = ((clickers + 100) * 16)
+  }
+}
+
+function getSuperClicker() {
+  if (clicks >= ((superClickers + 1) * 100)) {
+    clicks = clicks - ((superClickers + 1) * 100)
+    superClickers = superClickers + 1
+    clicksPS = clicksPS + 5
+    costSuperClickers = ((superClickers + 1) * 100)
+  }
+}
+
+function get10SuperClicker() {
+  if (clicks >= ((superClickers + 10) * 100)) {
+    clicks = clicks - ((superClickers + 10) * 100)
+    superClickers = superClickers + 10
+    clicksPS = clicksPS + 50
+    costSuperClickers = ((superClickers + 10) * 100)
+  }
+}
+
+function get100SuperClicker() {
+  if (clicks >= ((superClickers + 100) * 100)) {
+    clicks = clicks - ((superClickers + 100) * 100)
+    superClickers = superClickers + 100
+    clicksPS = clicksPS + 500
+    costSuperClickers = ((superClickers + 100) * 100)
+  }
+}
+
+function getSuperDuperClicker() {
+  if (clicks >= ((superDuperClickers + 1) * 2000)) {
+    clicks = clicks - ((superDuperClickers + 1) * 2000)
+    superDuperClickers = superDuperClickers + 1
+    clicksPS = clicksPS + 100
+    costSuperDuperClickers = ((superDuperClickers + 1) * 2000)
+  }
+}
+
+function get10SuperDuperClicker() {
+  if (clicks >= ((superDuperClickers + 10) * 2000)) {
+    clicks = clicks - ((superDuperClickers + 10) * 2000)
+    superDuperClickers = superDuperClickers + 10
+    clicksPS = clicksPS + 1000
+    costSuperDuperClickers = ((superDuperClickers + 10) * 2000)
+  }
+}
+
+function get100SuperDuperClicker() {
+  if (clicks >= ((superDuperClickers + 100) * 2000)) {
+    clicks = clicks - ((superDuperClickers + 100) * 2000)
+    superDuperClickers = superDuperClickers + 100
+    clicksPS = clicksPS + 10000
+    costSuperDuperClickers = ((superDuperClickers + 100) * 2000)
+  }
+}
+
+function getMultiplier() {
+  if (clicks >= ((clicksPC) * 100)) {
+    clicks = clicks - ((clicksPC) * 100)
+    clicksPC = clicksPC * 2
+    costMultiplier = ((clicksPC) * 100)
+  }
+}
+
+setInterval(timer, 1000);
+setInterval(update, 1);
+
+</script>
+</body>
+</html>
